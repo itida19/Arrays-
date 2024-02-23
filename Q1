@@ -1,0 +1,20 @@
+import java.util.Scanner;
+public class BinaryToDecimal {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] binaryDigits = new int[8];
+        System.out.println("Enter 8 binary digits (0s or 1s):");
+        for (int i = 0; i < binaryDigits.length; i++) {
+            binaryDigits[i] = scanner.nextInt();
+            if (binaryDigits[i] != 0 && binaryDigits[i] != 1) {
+                System.err.println("Invalid binary digit: " + binaryDigits[i] + ". Please enter 0 or 1.");
+                return; // Exit if invalid input is encountered
+            }
+        }
+        int decimalValue = 0;
+        for (int i = 0; i < binaryDigits.length; i++) {
+            decimalValue += binaryDigits[i] * Math.pow(2, binaryDigits.length - i - 1);
+        }
+        System.out.println("Decimal equivalent: " + decimalValue);
+    }
+}

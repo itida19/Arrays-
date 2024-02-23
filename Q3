@@ -1,0 +1,75 @@
+import java.util.Scanner;
+public class ArrayOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the number of rows and columns for the array:");
+        int rows = scanner.nextInt();
+        int cols = scanner.nextInt();
+        int[][] array = new int[rows][cols];
+        System.out.println("Enter the elements of the array:");
+        readArrayElements(array);
+        int max = findMaximum(array);
+        double stdDev = calculateStandardDeviation(array);
+
+        System.out.println("Transpose of the matrix:");
+        int[][] transpose = transposeMatrix(array);
+        printMatrix(transpose);
+    }
+    public static void readArrayElements(int[][] array) {
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                array[i][j] = scanner.nextInt();
+            }
+        }
+    }
+    public static int findMaximum(int[][] array) {
+        int max = Integer.MIN_VALUE;
+        for (int[] row : array) {
+            for (int num : row) {
+                if (num > max) {
+                    max = num;
+                }
+            }
+        }
+        return max;
+    }
+    public static double calculateStandardDeviation(int[][] array) {
+        int sum = 0;
+        int count = 0;
+        for (int[] row : array) {
+            for (int num : row) {
+                sum += num;
+                count++;
+            }
+        }
+        double mean = (double) sum / count;
+        double sumSquaredDiff = 0;
+        for (int[] row : array) {
+            for (int num : row) {
+                sumSquaredDiff += Math.pow(num - mean, 2);
+            }
+        }
+        return Math.sqrt(sumSquaredDiff / count);
+    }
+    public static int[][] transposeMatrix(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] transpose = new int[cols][rows];
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                transpose[i][j] = matrix[j][i];
+            }
+        }
+        return transpose;
+    }
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int num : row) {
+                System.out.print(num + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+

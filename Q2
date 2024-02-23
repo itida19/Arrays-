@@ -1,0 +1,41 @@
+import java.util.Scanner;
+public class PayWithMinimumNotes {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] purse = new int[7];
+        int[] notesUsed = new int[7];
+        for (int i = 0; i < purse.length; i++) {
+            System.out.print("Enter number of Rs." + (1 << i) + " notes: ");
+            purse[i] = scanner.nextInt();
+            if (purse[i] < 0) {
+                System.err.println("Invalid note count: " + purse[i] + ". Please enter non-negative values.");
+                return;
+            }
+        }
+        System.out.print("Enter amount to pay (less than Rs.1000): ");
+        int amount = scanner.nextInt();
+        if (amount < 0 || amount >= 1000) {
+            System.err.println("Invalid amount: " + amount + ". Please enter a value between 0 and Rs.999.");
+            return;
+        }
+        for (int i = 6; i >= 0; i--) {
+            int denomination = 1 << i;
+            while (amount >= denomination && purse[i] > 0) {
+                amount -= denomination;
+                purse[i]--;
+                notesUsed[i]++;
+            }
+        }
+        if (amount > 0) {
+            System.out.println("Failed to Pay");
+        } else {
+            System.out.println("Notes used:");
+            for (int i = 0; i < notesUsed.length; i++) {
+                int denomination = 1 << i;
+                if (notesUsed[i] > 0) {
+                    System.out.println("Rs." + denomination + ": " + notesUsed[i]);
+                }
+            }
+        }
+    }
+}
